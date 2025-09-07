@@ -36,3 +36,43 @@
     transform: rotate(360deg);
   }
 }
+
+/* Cloud animation */
+.weather-container.cloudy::before {
+  content: "";
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  background: url('/img/clouds.png') repeat-x;
+  animation: moveClouds 60s linear infinite;
+  opacity: 0.3;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+/* Rain animation */
+.weather-container.rainy::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: url('/img/rain.png');
+  background-repeat: repeat;
+  animation: fall 1s linear infinite;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+/* Animations keyframes */
+@keyframes moveClouds {
+  from { background-position: 0 0; }
+  to { background-position: 2000px 0; }
+}
+
+@keyframes fall {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 100%; }
+}
+

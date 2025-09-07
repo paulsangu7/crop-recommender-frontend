@@ -11,3 +11,61 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.weather-container {
+  min-height: 100vh;
+  padding: 20px;
+  transition: background 0.5s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Weather backgrounds */
+.weather-container.sunny {
+  background: linear-gradient(to bottom, #fceabb, #f8b500);
+}
+
+.weather-container.cloudy {
+  background: linear-gradient(to bottom, #d7d2cc, #304352);
+}
+
+.weather-container.rainy {
+  background: linear-gradient(to bottom, #4e54c8, #8f94fb);
+}
+
+.weather-container.stormy {
+  background: linear-gradient(to bottom, #434343, #000000);
+}
+
+.weather-container.snowy {
+  background: linear-gradient(to bottom, #e6f0ff, #a3c1f0);
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #f8f8f8;
+  text-align: center;
+  box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+  font-size: 14px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column; /* stack text and icons vertically */
+  align-items: center;    /* center horizontally */
+  padding: 10px 0;
+}
+
+.footer .social-icons ul {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+  margin: 5px 0 0 0; /* spacing above icons */
+  padding: 0;
+}
+
+.footer .social-icons ul li img {
+  width: 24px;
+  height: 24px;
+}
