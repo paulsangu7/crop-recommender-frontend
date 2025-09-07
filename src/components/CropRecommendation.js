@@ -1,5 +1,8 @@
 import { useState } from "react";
 
+// Live backend URL
+const BACKEND_URL = "https://crop-recommender-backend-2.onrender.com";
+
 // Crop images from public folder
 const cropImages = {
   Wheat: "/img/wheat.png",
@@ -48,9 +51,9 @@ function CropRecommendation() {
     setData(null);
 
     try {
-      const res = await fetch(`http://127.0.0.1:8000/recommend/${city}`);
+      const res = await fetch(`${BACKEND_URL}/recommend/${city}`);
       const result = await res.json();
-      if (res.ok) setData(result);
+      if (res.ok || res.status === undefined) setData(result);
       else setError(result.error || "Unknown error occurred");
     } catch (err) {
       setError("Failed to fetch data");
@@ -96,7 +99,7 @@ function CropRecommendation() {
     setInput("");
 
     try {
-      const res = await fetch("http://127.0.0.1:8000/chat-gpt", {
+      const res = await fetch(`${BACKEND_URL}/chat-gpt`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: input }),
@@ -126,21 +129,30 @@ function CropRecommendation() {
           borderRadius: "10px",
         }}
       >
-        <h1 style={{textAlign: "center"}}>🌾 Crop Recommender</h1>
+        <h1 style={{ textAlign: "center" }}>🌾 Crop Recommender</h1>
         <div style={{ display: "flex", justifyContent: "center", gap: "10px", marginTop: "10px", color: "#4014dfff" }}>
-  <input
-    type="text"
-    placeholder="Enter city"
-    value={city}
-    onChange={(e) => setCity(e.target.value)}
-    style={{ padding: "8px", width: "250px" }}
-  />
-  <button onClick={getRecommendation} style={{ padding: "8px 12px", color: "#4014dfff", border: "1px solid #4014dfff", background: "transparent",
-     cursor: "pointer", transition: "background-color 0.3s, color 0.3s", borderRadius: "6px" }}>
-    Recommendation
-  </button>
-</div>
-
+          <input
+            type="text"
+            placeholder="Enter city"
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
+            style={{ padding: "8px", width: "250px" }}
+          />
+          <button
+            onClick={getRecommendation}
+            style={{
+              padding: "8px 12px",
+              color: "#4014dfff",
+              border: "1px solid #4014dfff",
+              background: "transparent",
+              cursor: "pointer",
+              transition: "background-color 0.3s, color 0.3s",
+              borderRadius: "6px",
+            }}
+          >
+            Recommendation
+          </button>
+        </div>
 
         {loading && <p>Loading...</p>}
         {error && <p style={{ color: "red" }}>{error}</p>}
@@ -179,10 +191,7 @@ function CropRecommendation() {
                 }}
               >
                 {messages.map((m, i) => (
-                  <p
-                    key={i}
-                    style={{ textAlign: m.sender === "farmer" ? "right" : "left" }}
-                  >
+                  <p key={i} style={{ textAlign: m.sender === "farmer" ? "right" : "left" }}>
                     <strong>{m.sender === "farmer" ? "You" : "GPT"}:</strong> {m.text}
                   </p>
                 ))}
